@@ -286,12 +286,12 @@
                         <a href="https://mpago.li/2DWmUGz" target="_blank" rel="nofollow noindex" class="pagos-link">Comprar aquí</a>
                     </div>
                 </div>
-                <script> //oculta métodos de pago colombianos si no es Colombia
-                    fetch('https://ipapi.co/json/')
+                <script>
+                    fetch('https://api.ipinfo.io?token=8c715e2393feaf')
                         .then(res => res.json())
                         .then(data => {
-                            console.log('País detectado:', data.country_code);
-                            if (data.country_code !== 'CO') {
+                            console.log('País detectado:', data.country);
+                            if (data.country !== 'CO') {
                                 document.querySelectorAll('.colombia').forEach(el => el.style.display = 'none');
                             }
                         })
