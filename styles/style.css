@@ -73,7 +73,7 @@ body {
     transition: color 0.3s ease;
 }
 .tagline a:hover {
-    color: var(--primary-color);
+    color: var(--accent-color);
 }
 .division {
     color: var(--accent-color);
@@ -90,7 +90,7 @@ body {
     transition: color 0.3s ease;
 }
 .more a:hover {
-    color: var(--primary-color);
+    color: var(--accent-color);
 }
 .other {
     margin-top: 1rem;
@@ -120,7 +120,7 @@ li a {
             text-decoration: none;
             transition: color 0.3s ease;
             &:hover {
-                color: var(--primary-color);
+                color: var(--accent-color);
             }
         }
     }
