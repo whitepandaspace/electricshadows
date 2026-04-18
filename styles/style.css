@@ -8,9 +8,15 @@
 
     --fs-brand: 3rem;
     --fs-tagline: 1rem;
-    --fs-link: 0.8rem;
-    --fs-brand-mobile: 1.9rem;
-    --fs-tagline-mobile: 0.8rem;
+    --fs-link: 0.85rem;
+    --fs-brand-mobile: 1.5rem;
+    --fs-tagline-mobile: 0.7rem;
+
+    --fs-brand: 3rem;
+    --fs-tagline: 1rem;
+    --fs-link: 0.85rem;
+    --fs-brand-mobile: 1.5rem;
+    --fs-tagline-mobile: 0.7rem;
 
     --ls-brand: 0.3em;
     --ls-tagline: 0.5em;
@@ -42,7 +48,7 @@ body {
 .logo {
     height: auto;
     max-width: 90vw;
-    width: 280px;
+    width: 400px;
 }
 .brand-text {
     color: var(--primary-color);
@@ -144,7 +150,7 @@ li a {
     }
     .logo {
         max-width: 70vw;
-        width: 240px;
+        width: 280px;
     }
     .brand-text {
         display: block;
