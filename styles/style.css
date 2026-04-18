@@ -1,54 +1,76 @@
+:root {
+    --accent-color: hsla(270, 80%, 55%, 1);
+    --bg-color: #242021;
+    --primary-alpha: hsla(165, 100%, 63%, 0.5);
+    --primary-color: hsla(165, 100%, 63%,1);
+    --text-dark: hsla(340, 2%, 45%, 1);
+    --text-muted: hsla(340, 2%, 67%, 1);
+
+    --fs-brand: 3rem;
+    --fs-tagline: 1rem;
+    --fs-link: 0.85rem;
+    --fs-brand-mobile: 1.5rem;
+    --fs-tagline-mobile: 0.7rem;
+
+    --ls-brand: 0.3em;
+    --ls-tagline: 0.5em;
+    --ls-brand-mobile: 0.08em;
+    --ls-tagline-mobile: 0.12em;
+}
+
 * {
+    box-sizing: border-box;
     margin: 0;
     padding: 0;
-    box-sizing: border-box;
 }
 body {
-    background: #242021;
-    min-height: 100vh;
+    align-items: center;
+    background: var(--bg-color);
     display: flex;
     flex-direction: column;
-    align-items: center;
-    justify-content: center;
     font-family: 'Space Grotesk', sans-serif;
-    /* overflow: hidden; */
+    justify-content: center;
+    min-height: 100vh;
+    overflow: hidden;
 }
 .logo-container {
+    align-items: center;
     display: flex;
     flex-direction: column;
-    align-items: center;
     gap: 2rem;
 }
 .logo {
-    width: 400px;
-    max-width: 90vw;
     height: auto;
+    max-width: 90vw;
+    width: 400px;
 }
 .brand-text {
-    font-size: 3rem;
+    color: var(--primary-color);
+    font-size: var(--fs-brand);
     font-weight: 700;
-    color: #ff8c42;
-    text-transform: uppercase;
-    letter-spacing: 0.3em;
-    text-shadow: 0 0 30px rgba(255, 140, 66, 0.5);
+    letter-spacing: var(--ls-brand);
     text-align: center;
+    text-shadow: 0 0 30px var(--primary-alpha);
+    text-transform: uppercase;
 }
 .tagline {
-    font-size: 1rem;
-    color: hsla(340, 2%, 67%, 1);
-    letter-spacing: 0.5em;
+    color: var(--text-muted);
+    font-size: var(--fs-tagline);
+    letter-spacing: var(--ls-tagline);
+    padding: 0 5px;
+    text-align: center;
     text-transform: uppercase;
 }
 .tagline a {
-    color: hsla(340, 2%, 67%, 1);
+    color: var(--text-muted);
     text-decoration: none;
     transition: color 0.3s ease;
 }
 .tagline a:hover {
-    color: #ff8c42;
+    color: var(--primary-color);
 }
 .division {
-    color: hsla(270, 80%, 55%, 1);
+    color: var(--accent-color);
 }
 .more {
     display: flex;
@@ -56,13 +78,13 @@ body {
     margin-top: 1.5rem;
 }
 .more a {
-    color: hsla(340, 2%, 45%, 1);
+    color: var(--text-dark);
+    font-size: var(--fs-link);
     text-decoration: none;
-    font-size: 0.85rem;
     transition: color 0.3s ease;
 }
 .more a:hover {
-    color: #ff8c42;
+    color: var(--primary-color);
 }
 .other {
     margin-top: 1rem;
@@ -72,34 +94,34 @@ body {
     padding-left: 0;
 }
 li a {
-    color: hsla(340, 2%, 45%, 1);
+    color: var(--text-dark);
     text-align: center;
 }
 .other {
     border-radius: 2em;
-    border: 2px solid hsla(340, 2%, 45%, 1);
-    color: hsla(340, 2%, 45%, 1);
+    border: 2px solid var(--text-dark);
+    color: var(--text-dark);
     margin-top: 3em;
     padding: 5px;
-    width: 280px;
     text-align: center;
+    width: 280px;
     li {
-        margin-top: 1em;
         margin-bottom: 1em;
+        margin-top: 1em;
         a {
-            color: hsla(340, 2%, 45%, 1);
+            color: var(--text-dark);
+            font-size: var(--fs-link);
             text-decoration: none;
             transition: color 0.3s ease;
-            font-size: 0.85rem;
             &:hover {
-                color: #ff8c42;
+                color: var(--primary-color);
             }
         }
     }
 }
 .other details summary {
-    list-style: none;
     cursor: pointer;
+    list-style: none;
 }
 .other details summary::-webkit-details-marker {
     display: none;
@@ -108,8 +130,8 @@ li a {
     transition: border-color 0.3s ease, color 0.3s ease;
 }
 .other:hover, .other:focus-within {
-    border-color: #ff8c42;
-    color: #ff8c42;
+    border-color: var(--primary-color);
+    color: var(--primary-color);
 }
 @media (max-width: 540px) {
     body {
@@ -117,31 +139,31 @@ li a {
     }
     .logo-container {
         gap: 1.5rem;
-        width: 100%;
         text-align: center;
+        width: 100%;
     }
     .logo {
-        width: 200px;
         max-width: 70vw;
+        width: 280px;
     }
     .brand-text {
-        font-size: 1.5rem;
-        letter-spacing: 0.08em;
-        text-align: center;
         display: block;
+        font-size: var(--fs-brand-mobile);
+        letter-spacing: var(--ls-brand-mobile);
+        text-align: center;
         width: 100%;
     }
     .tagline {
-        font-size: 0.7rem;
+        display: block;
+        font-size: var(--fs-tagline-mobile);
         letter-spacing: 0.12em;
         text-align: center;
-        display: block;
         width: 100%;
     }
     .more {
         flex-wrap: wrap;
-        justify-content: center;
         gap: 1rem;
+        justify-content: center;
     }
     .other {
         margin-top: 3rem;
