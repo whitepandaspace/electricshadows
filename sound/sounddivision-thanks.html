@@ -65,6 +65,7 @@
     })(window,document,'script','dataLayer','GTM-MPZZQR4C');</script>
     <!-- End Google Tag Manager -->
 
+
     <!-- Meta Pixel Code -->
     <script>
     !function(f,b,e,v,n,t,s)
@@ -75,11 +76,26 @@
     t.src=v;s=b.getElementsByTagName(e)[0];
     s.parentNode.insertBefore(t,s)}(window, document,'script',
     'https://connect.facebook.net/en_US/fbevents.js');
+    
+    // Ejecutar el primer pixel (Purchase) de inmediato
     fbq('init', '185805490932985');
-    fbq('track', 'Purchase', {value: 12000.00, currency: 'COP'});
+    fbq('trackSingle', '185805490932985', 'Purchase', {value: 12000.00, currency: 'COP'});
+
+    // Ejecutar el segundo pixel (PageView) después de 3 segundos
+    setTimeout(function() {
+        fbq('init', '445713624564526');
+        fbq('trackSingle', '445713624564526', 'PageView');
+    }, 3000);
     </script>
-    <noscript><img height="1" width="1" tyle="display:none" src="https://www.facebook.com/tr?id=185805490932985&ev=PageView&noscript=1"/></noscript>
+    <noscript>
+        <img height="1" width="1" style="display:none" src="https://www.facebook.com/tr?id=185805490932985&ev=PageView&noscript=1"/>
+        <img height="1" width="1" style="display:none" src="https://www.facebook.com/tr?id=445713624564526&ev=PageView&noscript=1"/>
+    </noscript>
     <!-- End Meta Pixel Code -->
+     
+
+
+
 </head>
 
 <body class="bg-gray-50 text-gray-900 font-body selection:bg-primary selection:text-black">
