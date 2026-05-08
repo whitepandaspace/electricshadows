@@ -20,6 +20,10 @@ exports.handler = async (event, context) => {
 
   const body = JSON.parse(event.body);
 
+  if (!process.env.TIKTOK_ACCESS_TOKEN) {
+    return { statusCode: 500, headers, body: JSON.stringify({ error: "TIKTOK_ACCESS_TOKEN no configurado" }) };
+  }
+
   try {
     const response = await axios.post('https://business-api.tiktok.com/open_api/v1.3/event/track/', {
       pixel_code: "D7T48QBC77U471PH6PA0",
@@ -35,6 +39,7 @@ exports.handler = async (event, context) => {
         page: { url: body.page_url }
       }
     }, {
+      timeout: 8000,
       headers: {
         'Access-Token': process.env.TIKTOK_ACCESS_TOKEN,
         'Content-Type': 'application/json'
@@ -43,15 +48,19 @@ exports.handler = async (event, context) => {
 
     return {
       statusCode: 200,
-      headers, // Añadimos las cabeceras aquí también
+      headers,
       body: JSON.stringify({ message: "Evento enviado a TikTok", data: response.data })
     };
   } catch (error) {
-    const tiktokError = error.response && error.response.data ? error.response.data : error.message;
-    return { 
-      statusCode: 500, 
-      headers, // Y aquí
-      body: JSON.stringify({ error: "Error de comunicación con TikTok", detalle: tiktokError }) 
+    const tiktokError = error.response ? error.response.data : (error.code || error.message);
+    return {
+      statusCode: 500,
+      headers,
+      body: JSON.stringify({
+        error: "Error de comunicación con TikTok",
+        tipo: error.code || 'unknown',
+        detalle: tiktokError
+      })
     };
   }
 };
