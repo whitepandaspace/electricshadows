@@ -813,7 +813,15 @@
         <div class="bg-surface border border-primary/30 p-8 rounded-xl max-w-lg w-full relative max-h-[90vh] overflow-y-auto shadow-[0_0_30px_rgba(143,245,255,0.15)]">
             <button onclick="document.getElementById('checkoutModal').style.display = 'none'" class="absolute top-4 right-4 text-white/50 hover:text-white material-symbols-outlined transition-colors">close</button>
             <h2 class="text-2xl font-headline font-bold text-primary mb-6 uppercase tracking-widest glow-cyan">Completar Pedido</h2>
-            <form id="waForm" class="space-y-4">
+             <form id="waForm" class="space-y-4">
+                <script>
+                    window.onload = () => sendTikTokEvent('ViewContent', {
+                        id: 'BIO_001',
+                        name: 'Pillow: SYNAPTIC SLEEP 5-Z',
+                        price: 84000,
+                        currency: 'COP'
+                    });
+                </script>
                 <div class="space-y-4">
                     <h3 class="text-white/70 font-headline text-sm uppercase tracking-widest border-b border-white/10 pb-2">Datos Personales</h3>
                     <div>
@@ -873,6 +881,16 @@
         const city = document.getElementById('waCity').value;
         const address = document.getElementById('waAddress').value;
         const notes = document.getElementById('waNotes').value;
+
+        // TikTok tracking
+        sendTikTokEvent('AddToCart', {
+            id: 'BIO_001',
+            name: 'Pillow: SYNAPTIC SLEEP 5-Z',
+            price: 84000,
+            currency: 'COP',
+            email: email,
+            phone: phone
+        });
 
         // 2. Preparar el JSON para Google Apps Script
         const scriptData = {
