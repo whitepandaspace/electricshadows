@@ -239,7 +239,7 @@
     </script>
 
     <link rel="icon" type="image/png" href="./images/g185r.png" />
-    <link rel="manifest" href="/manifest.json" />
+
     <link
         href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300;400;500;600;700&amp;family=Manrope:wght@300;400;500;600;700;800&amp;display=swap"
         rel="stylesheet" />
@@ -952,17 +952,15 @@
         }
     });
     </script>
-    <!-- Service Worker Registration -->
+    <!-- Service Worker Unregister -->
     <script>
       if ('serviceWorker' in navigator) {
-        window.addEventListener('load', () => {
-          navigator.serviceWorker.register('/sw.js')
-            .then(registration => {
-              console.log('ServiceWorker registrado con éxito con alcance: ', registration.scope);
-            })
-            .catch(error => {
-              console.log('Error al registrar el ServiceWorker: ', error);
+        navigator.serviceWorker.getRegistrations().then(function(registrations) {
+          for(let registration of registrations) {
+            registration.unregister().then(function(boolean) {
+              console.log('Service Worker eliminado exitosamente');
             });
+          }
         });
       }
     </script>

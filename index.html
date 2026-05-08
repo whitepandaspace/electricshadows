@@ -6,7 +6,7 @@
     <meta name="theme-color" content="#0a0a0a" />
     <meta name="format-detection" content="telephone=no" />
     <link rel="icon" type="image/png" href="./images/g185r.png" />
-    <link rel="manifest" href="./manifest.json" />
+
     <title>Electric Shadows | Plataforma Creativa - Sonido, Bienestar y Educación</title>
     <meta name="description" content="E-commerce y plataforma educativa online para tu bienestar y entretenimiento. Mejora tu vida con cursos de idiomas, productos para el hogar, música y arte, respaldados por investigación científica, IA y talento humano.">
     <meta name="author" content="Electric Shadows" />
@@ -190,17 +190,15 @@
     src="https://c.statcounter.com/13223976/0/9ea94567/1/" alt="site stats"
     referrerPolicy="no-referrer-when-downgrade"></a></div></noscript> -->
     <!-- End of Statcounter Code -->
-    <!-- Service Worker Registration -->
+    <!-- Service Worker Unregister -->
     <script>
       if ('serviceWorker' in navigator) {
-        window.addEventListener('load', () => {
-          navigator.serviceWorker.register('./sw.js')
-            .then(registration => {
-              console.log('ServiceWorker registrado con éxito con alcance: ', registration.scope);
-            })
-            .catch(error => {
-              console.log('Error al registrar el ServiceWorker: ', error);
+        navigator.serviceWorker.getRegistrations().then(function(registrations) {
+          for(let registration of registrations) {
+            registration.unregister().then(function(boolean) {
+              console.log('Service Worker eliminado exitosamente');
             });
+          }
         });
       }
     </script>
