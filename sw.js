@@ -1,4 +1,4 @@
-const CACHE_NAME = 'electric-shadows-v2';
+const CACHE_NAME = 'electric-shadows-v3'; // Cambiado a v3 para forzar la actualización
 const urlsToCache = [
   '/',
   '/index.html',
@@ -14,7 +14,7 @@ self.addEventListener('install', event => {
   event.waitUntil(
     caches.open(CACHE_NAME)
       .then(cache => {
-        console.log('Archivos cacheados exitosamente');
+        console.log('Archivos cacheados exitosamente en v3');
         return cache.addAll(urlsToCache);
       })
   );
@@ -22,6 +22,14 @@ self.addEventListener('install', event => {
 
 // Interceptar peticiones para servir desde caché si no hay red
 self.addEventListener('fetch', event => {
+  
+  // ---> NUEVA REGLA: Ignorar POST y llamadas a Netlify <---
+  // Esto evita que el Service Worker intente cachear envíos de datos a la API
+  if (event.request.method === 'POST' || event.request.url.includes('/.netlify/functions/')) {
+    return; 
+  }
+  // --------------------------------------------------------
+
   event.respondWith(
     caches.match(event.request)
       .then(response => {
@@ -39,6 +47,7 @@ self.addEventListener('activate', event => {
       return Promise.all(
         cacheNames.map(cacheName => {
           if (cacheWhitelist.indexOf(cacheName) === -1) {
+            console.log('Borrando caché antigua:', cacheName);
             return caches.delete(cacheName);
           }
         })

@@ -1,8 +1,21 @@
 const axios = require('axios');
 
 exports.handler = async (event, context) => {
+  // 1. Cabeceras de seguridad para evitar bloqueos del navegador (CORS)
+  const headers = {
+    'Access-Control-Allow-Origin': '*',
+    'Access-Control-Allow-Headers': 'Content-Type',
+    'Access-Control-Allow-Methods': 'POST, OPTIONS'
+  };
+
+  // 2. Responder a la petición de verificación del navegador (Preflight)
+  if (event.httpMethod === 'OPTIONS') {
+    return { statusCode: 200, headers, body: '' };
+  }
+
+  // 3. Validar que sea un POST
   if (event.httpMethod !== "POST") {
-    return { statusCode: 405, body: "Method Not Allowed" };
+    return { statusCode: 405, headers, body: "Method Not Allowed" };
   }
 
   const body = JSON.parse(event.body);
@@ -12,7 +25,7 @@ exports.handler = async (event, context) => {
       pixel_code: "D7T48QBC77U471PH6PA0",
       event: body.event_name,
       event_id: body.event_id,
-      event_time: Math.floor(Date.now() / 1000), // Corregido: TikTok exige event_time, no timestamp
+      event_time: Math.floor(Date.now() / 1000),
       context: {
         user: {
             email: body.user_email,
@@ -30,14 +43,14 @@ exports.handler = async (event, context) => {
 
     return {
       statusCode: 200,
+      headers, // Añadimos las cabeceras aquí también
       body: JSON.stringify({ message: "Evento enviado a TikTok", data: response.data })
     };
   } catch (error) {
-    // Aquí atrapamos la respuesta exacta de TikTok para saber qué le molesta
     const tiktokError = error.response && error.response.data ? error.response.data : error.message;
-    
     return { 
       statusCode: 500, 
+      headers, // Y aquí
       body: JSON.stringify({ error: "Error de comunicación con TikTok", detalle: tiktokError }) 
     };
   }
