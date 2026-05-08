@@ -2,9 +2,11 @@ function sendTikTokEvent(eventName, productData) {
   const payload = {
     event_name: eventName,
     event_id: 'ev_' + Date.now() + '_' + Math.floor(Math.random() * 1000),
-    page_url: window.location.href,
-    user_email: productData.email || ''
+    page_url: window.location.href
   };
+
+  if (productData.email) payload.user_email = productData.email;
+  if (productData.phone) payload.user_phone = productData.phone;
 
   if (productData.id) {
     payload.content_id = productData.id;

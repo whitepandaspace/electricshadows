@@ -26,15 +26,24 @@ exports.handler = async (event, context) => {
   }
 
   try {
+    const userData = {
+      ip: event.headers['x-nf-client-connection-ip'] || '127.0.0.1',
+      user_agent: event.headers['user-agent']
+    };
+
+    if (body.user_email) {
+      userData.email = crypto.createHash('sha256').update(body.user_email.toLowerCase().trim()).digest('hex');
+    }
+
+    if (body.user_phone) {
+      userData.phone_number = crypto.createHash('sha256').update(body.user_phone.replace(/\D/g, '')).digest('hex');
+    }
+
     const eventData = {
       event: body.event_name,
       event_id: body.event_id,
       event_time: Math.floor(Date.now() / 1000),
-      user: {
-        email: crypto.createHash('sha256').update(body.user_email.toLowerCase().trim()).digest('hex'),
-        ip: event.headers['x-nf-client-connection-ip'] || '127.0.0.1',
-        user_agent: event.headers['user-agent']
-      },
+      user: userData,
       page: { url: body.page_url }
     };
 
