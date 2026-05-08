@@ -21,18 +21,36 @@ function sendTikTokEvent(eventName, productData) {
     payload.test_event_code = productData.testEventCode;
   }
 
-  return fetch('https://electricshadows.website/.netlify/functions/tiktok-api', {
-    method: 'POST',
-    headers: { 'Content-Type': 'application/json' },
-    body: JSON.stringify(payload)
-  })
-  .then(res => res.json())
-  .then(data => {
-    if (data.message) {
-      console.log('TikTok ' + eventName + ' enviado:', productData.name || 'sin producto');
-      return data;
-    }
-    throw new Error(data.error || 'Error desconocido');
+  var BASE = 'https://electricshadows.website/.netlify/functions/';
+  var promises = [];
+
+  promises.push(
+    fetch(BASE + 'tiktok-api', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify(payload)
+    }).then(function(r) { return r.json(); })
+    .then(function(d) { return { platform: 'TikTok', ok: !!d.message, data: d }; })
+    .catch(function(e) { return { platform: 'TikTok', ok: false, error: e.message }; })
+  );
+
+  if (productData.pixel_id) {
+    payload.pixel_id = productData.pixel_id;
+    promises.push(
+      fetch(BASE + 'meta-api', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(payload)
+      }).then(function(r) { return r.json(); })
+      .then(function(d) { return { platform: 'Meta', ok: !!d.message, data: d }; })
+      .catch(function(e) { return { platform: 'Meta', ok: false, error: e.message }; })
+    );
+  }
+
+  return Promise.all(promises).then(function(results) {
+    var label = productData.name || 'sin producto';
+    console.log(eventName + ' -> ' + label, results);
+    return results;
   });
 }
 
